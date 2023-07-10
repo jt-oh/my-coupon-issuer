@@ -15,7 +15,7 @@ RUN ./gradlew test
 
 # run image on dev env
 FROM base as dev
-CMD ./gradlew run
+CMD ./gradlew bootRun
 
 # build jar
 FROM base as build
