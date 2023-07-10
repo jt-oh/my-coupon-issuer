@@ -19,5 +19,5 @@ docker run -it --rm -p 8080:8080 my-coupon-issuer:dev
 
 ### Deploy Productions on k8s
 ```bash
-./deploy.sh
+./deploy_on_k8s.sh
 ```
