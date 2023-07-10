@@ -6,6 +6,6 @@ TAG=$IMAGE_NAME:$VERSION
 
 docker build -t $TAG .
 
-docker tag $IMAGE_NAME $IMAGE_NAME:latest
+docker tag $TAG "$IMAGE_NAME":latest
 
 docker push -a $IMAGE_NAME
