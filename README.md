@@ -8,8 +8,8 @@
 
 ### Run A Container In Development Mode
 ```bash
-docker build -t my-coupon-issuer:dev --target=dev .
-docker run -p 8080:8080 my-coupon-issuer:dev
+docker build -t my-coupon-issuer:dev --target=dev . &&
+docker run -it --rm -p 8080:8080 my-coupon-issuer:dev
 ```
 
 ### Build and Push Container Image
