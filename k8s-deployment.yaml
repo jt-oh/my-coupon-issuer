@@ -4,8 +4,7 @@ metadata:
   # Unique key of the Deployment instance
   name: my-coupon-issuer-deploy
 spec:
-  # 1 Pods should exist at all times.
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: my-coupon-issuer
