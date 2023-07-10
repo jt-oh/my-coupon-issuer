@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Unique key of the Deployment instance
+  name: my-coupon-issuer-deploy
+spec:
+  # 1 Pods should exist at all times.
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-coupon-issuer
+  template:
+    metadata:
+      labels:
+        # Apply this label to pods and default
+        # the Deployment label selector to this value
+        app: my-coupon-issuer
+    spec:
+      containers:
+        - name: my-coupon-issuer
+          image: jtoh0227/my-coupon-issuer:latest
+          ports:
+            - containerPort: 8080
+              hostPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-coupon-issuer-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: my-coupon-issuer
+  ports:
+    - port: 8080
