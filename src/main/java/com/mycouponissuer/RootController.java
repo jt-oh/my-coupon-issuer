@@ -1,4 +1,4 @@
-package com.mycouponissuer.restservice;
+package com.mycouponissuer;
 
 import java.net.InetAddress;
 import org.springframework.web.bind.annotation.RestController;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
-class RootApiController {
+class RootController {
 
     @GetMapping("/")
     public String index(@RequestParam(value = "name", defaultValue = "World") String name) {
@@ -22,5 +22,4 @@ class RootApiController {
 
         return String.format("Hello %s! Greeting from %s", name, hostname);
     }
-
 }
