@@ -32,4 +32,19 @@ public class CouponTemplateRestController {
     public ArrayList<CouponTemplateDTO> getCouponTemplateList() {
         return couponTemplateApplicationService.getCouponTemplateList();
     }
+
+    @GetMapping("/{id}")
+    public CouponTemplateDTO getCouponTemplate(@PathVariable long id) {
+        return couponTemplateApplicationService.getCouponTemplate(id);
+    }
+
+    @PostMapping("/{id}/issue")
+    public CouponDTO issueCoupon(@PathVariable long id, @RequestBody String userId) throws Exception {
+        return couponTemplateApplicationService.issueCoupon(
+            CouponIssueRequest.builder()
+                .couponTemplateId(id)
+                .ownerId(userId)
+                .build()
+        );
+    }
 }
