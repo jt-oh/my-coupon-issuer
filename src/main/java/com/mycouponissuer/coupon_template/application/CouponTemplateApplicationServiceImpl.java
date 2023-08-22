@@ -31,14 +31,16 @@ public class CouponTemplateApplicationServiceImpl implements CouponTemplateAppli
 
     // needs Transactional
     public CouponTemplateDTO createCouponTemplate(CouponTemplateCreateRequest createRequest) {
-         CouponTemplate couponTemplate = couponTemplateRepository.save(
-             CouponTemplate.builder()
+        // Todo:
+        //  1. assign id when creating Coupon Template
+        //  2. separate CouponTemplate Creation to CouponTemplateFactory
+        CouponTemplate couponTemplate = CouponTemplate.builder()
                 .name(new CouponTemplateName(createRequest.getName()))
                 .quota(createRequest.getQuota())
                 .coupons(new ArrayList<CouponId>())
                 .build();
 
-        return new CouponTemplateDTO(couponTemplate);
+        return new CouponTemplateDTO(couponTemplateRepository.save(couponTemplate));
     }
 
     public ArrayList<CouponTemplateDTO> getCouponTemplateList() {

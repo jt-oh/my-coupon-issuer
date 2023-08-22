@@ -36,10 +36,17 @@ public class CouponTemplate {
             throw new RuntimeException("CouponTemplate is not issuable");
         }
 
-        return Coupon.builder()
+        // Todo:
+        //  1. assign id when creating Coupon
+        //  2. separate Coupon Creation to CouponFactory
+        Coupon coupon = Coupon.builder()
                 .couponTemplateId(this.id)
                 .ownerId(ownerId)
                 .build();
+
+//        coupons.add(coupon.getId());
+
+        return coupon;
     }
 
     public int countIssuedCoupons() {
