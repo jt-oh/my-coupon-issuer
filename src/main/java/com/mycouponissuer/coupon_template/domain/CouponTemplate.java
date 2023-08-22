@@ -1,11 +1,14 @@
 package com.mycouponissuer.coupon_template.domain;
 
+import com.mycouponissuer.coupon_template.domain.value_objects.CouponId;
 import com.mycouponissuer.coupon_template.domain.value_objects.CouponTemplateId;
 import com.mycouponissuer.coupon_template.domain.value_objects.CouponTemplateName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
 
 @AllArgsConstructor
 @Getter
@@ -15,6 +18,7 @@ public class CouponTemplate {
     private CouponTemplateId id;
     private CouponTemplateName name;
     private int quota;
+    private ArrayList<CouponId> coupons;
 
     public CouponTemplate(CouponTemplate couponTemplate) {
         CouponTemplateId couponTemplateId = couponTemplate.getId();
@@ -24,6 +28,7 @@ public class CouponTemplate {
 
         this.name = couponTemplate.getName();
         this.quota = couponTemplate.getQuota();
+        this.coupons = couponTemplate.getCoupons();
     }
 
     public Coupon issueCoupon(String ownerId) {
@@ -38,7 +43,7 @@ public class CouponTemplate {
     }
 
     public int countIssuedCoupons() {
-        return 0;
+        return coupons.size();
     }
 
     public boolean isIssuable() {

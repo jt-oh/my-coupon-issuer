@@ -8,6 +8,7 @@ import com.mycouponissuer.coupon_template.application.outbound_ports.CouponRepos
 import com.mycouponissuer.coupon_template.application.outbound_ports.CouponTemplateRepository;
 import com.mycouponissuer.coupon_template.domain.Coupon;
 import com.mycouponissuer.coupon_template.domain.CouponTemplate;
+import com.mycouponissuer.coupon_template.domain.value_objects.CouponId;
 import com.mycouponissuer.coupon_template.domain.value_objects.CouponTemplateId;
 import com.mycouponissuer.coupon_template.domain.value_objects.CouponTemplateName;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ public class CouponTemplateApplicationServiceImpl implements CouponTemplateAppli
              CouponTemplate.builder()
                 .name(new CouponTemplateName(createRequest.getName()))
                 .quota(createRequest.getQuota())
-                .build()
-         );
+                .coupons(new ArrayList<CouponId>())
+                .build();
 
         return new CouponTemplateDTO(couponTemplate);
     }
