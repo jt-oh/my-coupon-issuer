@@ -41,8 +41,6 @@ public class CouponTemplateApplicationServiceImpl implements CouponTemplateAppli
         this.couponFactory = couponFactory;
     }
 
-
-    // needs Transactional
     public CouponTemplateDTO createCouponTemplate(CouponTemplateCreateRequest createRequest) {
         CouponTemplate couponTemplate = couponTemplateFactory.create(
                 CouponTemplateCreateCommand.builder()
@@ -67,8 +65,9 @@ public class CouponTemplateApplicationServiceImpl implements CouponTemplateAppli
         return new CouponTemplateDTO(couponTemplateRepository.find(new CouponTemplateId(id)));
     }
 
-    // needs Transactional
     public CouponDTO issueCoupon(CouponIssueRequest couponIssueRequest) throws Exception {
+        // needs Mutual Exclusion
+        // start MutEx
         CouponTemplate couponTemplate = couponTemplateRepository.find(
                 new CouponTemplateId(couponIssueRequest.getCouponTemplateId()));
 
@@ -85,6 +84,9 @@ public class CouponTemplateApplicationServiceImpl implements CouponTemplateAppli
             throw e;
         }
 
-        return new CouponDTO(couponRepository.save(issuedCoupon));
+        CouponDTO couponDTO = new CouponDTO(couponRepository.save(issuedCoupon));
+        // end MutEx
+
+        return couponDTO;
     }
 }
