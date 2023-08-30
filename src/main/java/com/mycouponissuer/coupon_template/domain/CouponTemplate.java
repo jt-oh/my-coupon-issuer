@@ -31,29 +31,19 @@ public class CouponTemplate {
         this.coupons = couponTemplate.getCoupons();
     }
 
-    public Coupon issueCoupon(String ownerId) {
-        if (! isIssuable()) {
-            throw new RuntimeException("CouponTemplate is not issuable");
-        }
-
-        // Todo:
-        //  1. assign id when creating Coupon
-        //  2. separate Coupon Creation to CouponFactory
-        Coupon coupon = Coupon.builder()
-                .couponTemplateId(this.id)
-                .ownerId(ownerId)
-                .build();
-
-//        coupons.add(coupon.getId());
-
-        return coupon;
-    }
-
     public int countIssuedCoupons() {
         return coupons.size();
     }
 
     public boolean isIssuable() {
         return countIssuedCoupons() < this.quota;
+    }
+
+    public boolean addIssuedCoupon(Coupon coupon) throws Exception {
+        if (! isIssuable()) {
+            throw new Exception("CouponTemplate is not issuable");
+        }
+
+        return coupons.add(coupon.getId());
     }
 }

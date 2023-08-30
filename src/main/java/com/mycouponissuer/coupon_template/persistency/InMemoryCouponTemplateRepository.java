@@ -13,11 +13,8 @@ import java.util.concurrent.atomic.AtomicLong;
 @Component
 public class InMemoryCouponTemplateRepository implements CouponTemplateRepository {
     private Map<Long, CouponTemplate> repo = new ConcurrentHashMap();
-    private AtomicLong idGenerator = new AtomicLong(0);
 
     public CouponTemplate save(CouponTemplate couponTemplate) {
-        couponTemplate.setId(new CouponTemplateId(idGenerator.incrementAndGet()));
-
         repo.put(Long.valueOf(couponTemplate.getId().getId()), new CouponTemplate(couponTemplate));
 
         return couponTemplate;

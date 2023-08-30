@@ -4,8 +4,12 @@ import com.mycouponissuer.coupon_template.application.dto.CouponDTO;
 import com.mycouponissuer.coupon_template.application.dto.CouponIssueRequest;
 import com.mycouponissuer.coupon_template.application.dto.CouponTemplateCreateRequest;
 import com.mycouponissuer.coupon_template.application.dto.CouponTemplateDTO;
+import com.mycouponissuer.coupon_template.application.outbound_ports.CouponFactory;
 import com.mycouponissuer.coupon_template.application.outbound_ports.CouponRepository;
+import com.mycouponissuer.coupon_template.application.outbound_ports.CouponTemplateFactory;
 import com.mycouponissuer.coupon_template.application.outbound_ports.CouponTemplateRepository;
+import com.mycouponissuer.coupon_template.application.outbound_ports.dto.CouponCreateCommand;
+import com.mycouponissuer.coupon_template.application.outbound_ports.dto.CouponTemplateCreateCommand;
 import com.mycouponissuer.coupon_template.domain.Coupon;
 import com.mycouponissuer.coupon_template.domain.CouponTemplate;
 import com.mycouponissuer.coupon_template.domain.value_objects.CouponId;
@@ -20,25 +24,32 @@ import java.util.ArrayList;
 @Component
 public class CouponTemplateApplicationServiceImpl implements CouponTemplateApplicationService {
     private CouponTemplateRepository couponTemplateRepository;
+    private CouponTemplateFactory couponTemplateFactory;
     private CouponRepository couponRepository;
+    private CouponFactory couponFactory;
 
     @Autowired
-    CouponTemplateApplicationServiceImpl(CouponTemplateRepository couponTemplateRepository, CouponRepository couponRepository) {
+    CouponTemplateApplicationServiceImpl(
+            CouponTemplateRepository couponTemplateRepository,
+            CouponTemplateFactory couponTemplateFactory,
+            CouponRepository couponRepository,
+            CouponFactory couponFactory
+    ) {
         this.couponTemplateRepository = couponTemplateRepository;
         this.couponRepository = couponRepository;
+        this.couponTemplateFactory = couponTemplateFactory;
+        this.couponFactory = couponFactory;
     }
 
 
     // needs Transactional
     public CouponTemplateDTO createCouponTemplate(CouponTemplateCreateRequest createRequest) {
-        // Todo:
-        //  1. assign id when creating Coupon Template
-        //  2. separate CouponTemplate Creation to CouponTemplateFactory
-        CouponTemplate couponTemplate = CouponTemplate.builder()
-                .name(new CouponTemplateName(createRequest.getName()))
-                .quota(createRequest.getQuota())
-                .coupons(new ArrayList<CouponId>())
-                .build();
+        CouponTemplate couponTemplate = couponTemplateFactory.create(
+                CouponTemplateCreateCommand.builder()
+                        .name(createRequest.getName())
+                        .quota(createRequest.getQuota())
+                        .build()
+        );
 
         return new CouponTemplateDTO(couponTemplateRepository.save(couponTemplate));
     }
@@ -61,15 +72,19 @@ public class CouponTemplateApplicationServiceImpl implements CouponTemplateAppli
         CouponTemplate couponTemplate = couponTemplateRepository.find(
                 new CouponTemplateId(couponIssueRequest.getCouponTemplateId()));
 
-        Coupon coupon;
+        Coupon issuedCoupon = couponFactory.create(
+                CouponCreateCommand.builder()
+                        .couponTemplateId(couponTemplate.getId().getId())
+                        .ownerId(couponIssueRequest.getOwnerId())
+                        .build()
+        );
+
         try {
-            coupon = couponTemplate.issueCoupon(couponIssueRequest.getOwnerId());
+            couponTemplate.addIssuedCoupon(issuedCoupon);
         } catch (Exception e) {
-            throw new Exception("CouponTemplate is not issuable");
+            throw e;
         }
 
-        couponRepository.save(coupon);
-
-        return new CouponDTO(coupon);
+        return new CouponDTO(couponRepository.save(issuedCoupon));
     }
 }
