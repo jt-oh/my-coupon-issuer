@@ -1,4 +1,4 @@
-package com.mycouponissuer.coupon_template.persistency;
+package com.mycouponissuer.coupon_template.persistency.in_memory_infrastructures.coupon;
 
 import com.mycouponissuer.coupon_template.application.outbound_ports.CouponRepository;
 import com.mycouponissuer.coupon_template.domain.Coupon;
