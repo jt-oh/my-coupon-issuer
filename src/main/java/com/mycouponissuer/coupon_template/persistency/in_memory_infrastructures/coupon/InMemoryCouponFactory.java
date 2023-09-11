@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-@Component
+//@Component
 public class InMemoryCouponFactory implements CouponFactory {
     private static AtomicLong idGenerator = new AtomicLong(0);
 

@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-@Component
+//@Component
 public class InMemoryCouponRepository implements CouponRepository {
     private Map<Long, Coupon> repo = new ConcurrentHashMap();
 

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 
-@Component
+//@Component
 public class InMemoryCouponTemplateFactory implements CouponTemplateFactory {
     private static AtomicLong idGenerator = new AtomicLong(0);
 
