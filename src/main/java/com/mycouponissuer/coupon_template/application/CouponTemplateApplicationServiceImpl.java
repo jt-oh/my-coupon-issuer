@@ -43,6 +43,7 @@ public class CouponTemplateApplicationServiceImpl implements CouponTemplateAppli
      * Atomic Operation, Mutual Exclusion 을 보장해야 한다.
      *
      * ToDo: Atomic Operation, Mutual Exclusion 보장
+     *   Persistency 에 독립적인 방식으로 위 두 속성을 보장해야 한다
      */
     public CouponTemplateDTO createCouponTemplate(CouponTemplateCreateRequest createRequest) {
         CouponTemplate couponTemplate = couponTemplateFactory.create(
@@ -73,6 +74,7 @@ public class CouponTemplateApplicationServiceImpl implements CouponTemplateAppli
      * Atomic Operation, Mutual Exclusion 을 보장해야 한다.
      *
      * ToDo: Atomic Operation, Mutual Exclusion 보장
+     *   Persistency 에 독립적인 방식으로 위 두 속성을 보장해야 한다
      */
     public CouponDTO issueCoupon(CouponIssueRequest couponIssueRequest) throws Exception {
         CouponTemplate couponTemplate = couponTemplateRepository.find(
