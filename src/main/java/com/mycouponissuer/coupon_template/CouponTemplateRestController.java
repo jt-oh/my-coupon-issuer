@@ -7,7 +7,6 @@ import com.mycouponissuer.coupon_template.application.dto.CouponTemplateCreateRe
 import com.mycouponissuer.coupon_template.application.dto.CouponTemplateDTO;
 import com.mycouponissuer.coupon_template.application.outbound_ports.CouponRepository;
 import com.mycouponissuer.coupon_template.application.outbound_ports.CouponTemplateRepository;
-import com.mycouponissuer.coupon_template.domain.CouponTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -4,7 +4,6 @@ import com.mycouponissuer.coupon_template.application.dto.CouponDTO;
 import com.mycouponissuer.coupon_template.application.dto.CouponIssueRequest;
 import com.mycouponissuer.coupon_template.application.dto.CouponTemplateCreateRequest;
 import com.mycouponissuer.coupon_template.application.dto.CouponTemplateDTO;
-import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 
