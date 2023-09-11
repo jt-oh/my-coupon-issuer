@@ -39,7 +39,7 @@ public class CouponTemplateRestController {
 
     @PostMapping("/{id}/issue")
     public CouponDTO issueCoupon(@PathVariable long id, @RequestBody String userId) throws Exception {
-    // TODO: handle exceptionㄹ
+        // TODO: handle exception
         return couponTemplateApplicationService.issueCoupon(
             CouponIssueRequest.builder()
                 .couponTemplateId(id)

@@ -38,6 +38,12 @@ public class CouponTemplateApplicationServiceImpl implements CouponTemplateAppli
         this.couponFactory = couponFactory;
     }
 
+    /**
+     * 쿠폰 Template 을 생성하는 메소드이다.
+     * Atomic Operation, Mutual Exclusion 을 보장해야 한다.
+     *
+     * ToDo: Atomic Operation, Mutual Exclusion 보장
+     */
     public CouponTemplateDTO createCouponTemplate(CouponTemplateCreateRequest createRequest) {
         CouponTemplate couponTemplate = couponTemplateFactory.create(
                 CouponTemplateCreateCommand.builder()
@@ -62,9 +68,13 @@ public class CouponTemplateApplicationServiceImpl implements CouponTemplateAppli
         return new CouponTemplateDTO(couponTemplateRepository.find(new CouponTemplateId(id)));
     }
 
+    /**
+     * 쿠폰 Template 에서 쿠폰을 발급하는 메소드이다.
+     * Atomic Operation, Mutual Exclusion 을 보장해야 한다.
+     *
+     * ToDo: Atomic Operation, Mutual Exclusion 보장
+     */
     public CouponDTO issueCoupon(CouponIssueRequest couponIssueRequest) throws Exception {
-        // needs Mutual Exclusion
-        // start MutEx
         CouponTemplate couponTemplate = couponTemplateRepository.find(
                 new CouponTemplateId(couponIssueRequest.getCouponTemplateId()));
 
@@ -81,9 +91,6 @@ public class CouponTemplateApplicationServiceImpl implements CouponTemplateAppli
             throw e;
         }
 
-        CouponDTO couponDTO = new CouponDTO(couponRepository.save(issuedCoupon));
-        // end MutEx
-
-        return couponDTO;
+        return new CouponDTO(couponRepository.save(issuedCoupon));
     }
 }
