@@ -13,6 +13,7 @@ import java.util.ArrayList;
 @RestController()
 @RequestMapping("api/v1/coupon-template")
 public class CouponTemplateRestController {
+    // ToDo: 실행 환경 설정에 따라 Dependency Injection 시 Persistency 를 설정 가능하도록 기능화
     @Autowired
     private CouponTemplateApplicationService couponTemplateApplicationService;
 
