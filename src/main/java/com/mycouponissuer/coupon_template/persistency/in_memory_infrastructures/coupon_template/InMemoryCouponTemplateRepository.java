@@ -3,14 +3,11 @@ package com.mycouponissuer.coupon_template.persistency.in_memory_infrastructures
 import com.mycouponissuer.coupon_template.application.outbound_ports.CouponTemplateRepository;
 import com.mycouponissuer.coupon_template.domain.CouponTemplate;
 import com.mycouponissuer.coupon_template.domain.value_objects.CouponTemplateId;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
-//@Component
 public class InMemoryCouponTemplateRepository implements CouponTemplateRepository {
     private Map<Long, CouponTemplate> repo = new ConcurrentHashMap();
 
